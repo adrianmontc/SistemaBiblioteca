@@ -238,4 +238,27 @@ public class BibliotecaService : IRepositorio<Libro>
             Console.WriteLine("----------------------");
         }
     }
+    public void ConsultarPorAutorOCategoria()
+    {
+        Console.Write("Ingrese autor o categoria: ");
+        string texto = Console.ReadLine() ?? "";
+
+        var resultados = libros
+            .Where(l =>
+                l.Autor.ToLower() == texto.ToLower() ||
+                l.Categoria.ToLower() == texto.ToLower())
+            .ToList();
+
+        if (resultados.Count == 0)
+        {
+            Console.WriteLine("No se encontraron libros.");
+            return;
+        }
+
+        foreach (Libro libro in resultados)
+        {
+            libro.Mostrar();
+            Console.WriteLine("----------------------");
+        }
+    }
 }
