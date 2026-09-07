@@ -220,4 +220,22 @@ public class BibliotecaService : IRepositorio<Libro>
 
         Console.WriteLine("Devolucion registrada correctamente.");
     }
+    public void ConsultarLibrosDisponibles()
+    {
+        Console.WriteLine("LIBROS DISPONIBLES");
+        var disponibles = libros
+            .Where(l => l.Disponible)
+            .ToList();
+        if (disponibles.Count == 0)
+        {
+            Console.WriteLine("No existen libros disponibles.");
+            return;
+        }
+
+        foreach (Libro libro in disponibles)
+        {
+            libro.Mostrar();
+            Console.WriteLine("----------------------");
+        }
+    }
 }
