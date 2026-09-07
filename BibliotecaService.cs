@@ -147,4 +147,77 @@ public class BibliotecaService : IRepositorio<Libro>
 
         Console.WriteLine("Libro eliminado correctamente.");
     }
+    public void RegistrarPrestamo()
+    {
+        Console.WriteLine("REGISTRAR PRESTAMO");
+
+        Console.Write("Codigo del libro: ");
+        int codigoLibro = int.Parse(Console.ReadLine() ?? "");
+
+        Libro libro = libros.FirstOrDefault(l => l.Codigo == codigoLibro);
+
+        if (libro == null)
+        {
+            throw new Exception("No se encontro el libro.");
+        }
+
+        if (!libro.Disponible)
+        {
+            throw new Exception("El libro no esta disponible.");
+        }
+
+        Console.Write("Identificador del usuario: ");
+        int identificadorUsuario = int.Parse(Console.ReadLine() ?? "");
+
+        Usuario usuario = usuarios.FirstOrDefault(u => u.Identificador == identificadorUsuario);
+
+        if (usuario == null)
+        {
+            throw new Exception("No se encontro el usuario.");
+        }
+
+        Prestamo nuevoPrestamo = new Prestamo(
+            codigoLibro,
+            identificadorUsuario,
+            DateTime.Now,
+            true
+        );
+
+        prestamos.Add(nuevoPrestamo);
+        libro.Disponible = false;
+
+        Console.WriteLine("Prestamo registrado correctamente.");
+    }
+
+    public void RegistrarDevolucion()
+    {
+        Console.WriteLine("REGISTRAR DEVOLUCION");
+
+        Console.Write("Codigo del libro: ");
+        int codigoLibro = int.Parse(Console.ReadLine() ?? "");
+
+        int posicion = prestamos.FindIndex(p =>
+            p.CodigoLibro == codigoLibro && p.Activo);
+
+        if (posicion == -1)
+        {
+            throw new Exception("No existe un prestamo activo para ese libro.");
+        }
+
+        Prestamo prestamo = prestamos[posicion];
+
+        prestamos[posicion] = prestamo with
+        {
+            Activo = false
+        };
+
+        Libro libro = libros.FirstOrDefault(l => l.Codigo == codigoLibro);
+
+        if (libro != null)
+        {
+            libro.Disponible = true;
+        }
+
+        Console.WriteLine("Devolucion registrada correctamente.");
+    }
 }
