@@ -223,9 +223,11 @@ public class BibliotecaService : IRepositorio<Libro>
     public void ConsultarLibrosDisponibles()
     {
         Console.WriteLine("LIBROS DISPONIBLES");
+
         var disponibles = libros
             .Where(l => l.Disponible)
             .ToList();
+
         if (disponibles.Count == 0)
         {
             Console.WriteLine("No existen libros disponibles.");
@@ -252,6 +254,26 @@ public class BibliotecaService : IRepositorio<Libro>
         if (resultados.Count == 0)
         {
             Console.WriteLine("No se encontraron libros.");
+            return;
+        }
+
+        foreach (Libro libro in resultados)
+        {
+            libro.Mostrar();
+            Console.WriteLine("----------------------");
+        }
+    }
+    public void ConsultarLibrosOrdenados()
+    {
+        Console.WriteLine("LIBROS ORDENADOS POR TITULO");
+
+        var resultados = libros
+            .OrderBy(l => l.Titulo)
+            .ToList();
+
+        if (resultados.Count == 0)
+        {
+            Console.WriteLine("No existen libros registrados.");
             return;
         }
 
