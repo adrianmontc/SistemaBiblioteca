@@ -99,4 +99,52 @@ public class BibliotecaService : IRepositorio<Libro>
 
         Console.WriteLine("Usuario registrado correctamente.");
     }
+    public void ListarLibros()
+    {
+        Console.WriteLine("LISTA DE LIBROS");
+
+        if (libros.Count == 0)
+        {
+            Console.WriteLine("No existen libros registrados.");
+            return;
+        }
+
+        foreach (Libro libro in libros)
+        {
+            libro.Mostrar();
+            Console.WriteLine("----------------------");
+        }
+    }
+
+    public void BuscarLibro()
+    {
+        Console.Write("Ingrese el codigo del libro: ");
+        int codigo = int.Parse(Console.ReadLine() ?? "");
+
+        Libro libro = libros.FirstOrDefault(l => l.Codigo == codigo);
+
+        if (libro == null)
+        {
+            throw new Exception("No se encontro el libro.");
+        }
+
+        libro.Mostrar();
+    }
+
+    public void EliminarLibro()
+    {
+        Console.Write("Ingrese el codigo del libro: ");
+        int codigo = int.Parse(Console.ReadLine() ?? "");
+
+        Libro libro = libros.FirstOrDefault(l => l.Codigo == codigo);
+
+        if (libro == null)
+        {
+            throw new Exception("No se encontro el libro.");
+        }
+
+        Eliminar(libro);
+
+        Console.WriteLine("Libro eliminado correctamente.");
+    }
 }
