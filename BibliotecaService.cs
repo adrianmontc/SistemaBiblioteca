@@ -61,7 +61,7 @@ public class BibliotecaService : IRepositorio<Libro>
         Console.Write("Codigo: ");
         int codigo = int.Parse(Console.ReadLine() ?? "");
 
-        Libro libroExistente = libros.FirstOrDefault(l => l.Codigo == codigo);
+        Libro? libroExistente = libros.FirstOrDefault(l => l.Codigo == codigo);
 
         if (libroExistente != null)
         {
@@ -81,7 +81,7 @@ public class BibliotecaService : IRepositorio<Libro>
         Console.Write("Identificador: ");
         int identificador = int.Parse(Console.ReadLine() ?? "");
 
-        Usuario usuarioExistente = usuarios.FirstOrDefault(u => u.Identificador == identificador);
+        Usuario? usuarioExistente = usuarios.FirstOrDefault(u => u.Identificador == identificador);
 
         if (usuarioExistente != null)
         {
@@ -121,7 +121,7 @@ public class BibliotecaService : IRepositorio<Libro>
         Console.Write("Ingrese el codigo del libro: ");
         int codigo = int.Parse(Console.ReadLine() ?? "");
 
-        Libro libro = libros.FirstOrDefault(l => l.Codigo == codigo);
+        Libro? libro = libros.FirstOrDefault(l => l.Codigo == codigo);
 
         if (libro == null)
         {
@@ -136,7 +136,7 @@ public class BibliotecaService : IRepositorio<Libro>
         Console.Write("Ingrese el codigo del libro: ");
         int codigo = int.Parse(Console.ReadLine() ?? "");
 
-        Libro libro = libros.FirstOrDefault(l => l.Codigo == codigo);
+        Libro? libro = libros.FirstOrDefault(l => l.Codigo == codigo);
 
         if (libro == null)
         {
@@ -154,7 +154,7 @@ public class BibliotecaService : IRepositorio<Libro>
         Console.Write("Codigo del libro: ");
         int codigoLibro = int.Parse(Console.ReadLine() ?? "");
 
-        Libro libro = libros.FirstOrDefault(l => l.Codigo == codigoLibro);
+        Libro? libro = libros.FirstOrDefault(l => l.Codigo == codigoLibro);
 
         if (libro == null)
         {
@@ -169,7 +169,7 @@ public class BibliotecaService : IRepositorio<Libro>
         Console.Write("Identificador del usuario: ");
         int identificadorUsuario = int.Parse(Console.ReadLine() ?? "");
 
-        Usuario usuario = usuarios.FirstOrDefault(u => u.Identificador == identificadorUsuario);
+        Usuario? usuario = usuarios.FirstOrDefault(u => u.Identificador == identificadorUsuario);
 
         if (usuario == null)
         {
@@ -211,7 +211,7 @@ public class BibliotecaService : IRepositorio<Libro>
             Activo = false
         };
 
-        Libro libro = libros.FirstOrDefault(l => l.Codigo == codigoLibro);
+        Libro? libro = libros.FirstOrDefault(l => l.Codigo == codigoLibro);
 
         if (libro != null)
         {
