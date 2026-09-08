@@ -283,4 +283,32 @@ public class BibliotecaService : IRepositorio<Libro>
             Console.WriteLine("----------------------");
         }
     }
+    public void ConsultarPrestamosActivos()
+    {
+        Console.WriteLine("PRESTAMOS ACTIVOS");
+
+        var resultados = prestamos
+            .Where(p => p.Activo)
+            .Select(p => new
+            {
+                CodigoLibro = p.CodigoLibro,
+                IdentificadorUsuario = p.IdentificadorUsuario,
+                Fecha = p.FechaPrestamo
+            })
+            .ToList();
+
+        if (resultados.Count == 0)
+        {
+            Console.WriteLine("No existen prestamos activos.");
+            return;
+        }
+
+        foreach (var prestamo in resultados)
+        {
+            Console.WriteLine("Codigo del libro: " + prestamo.CodigoLibro);
+            Console.WriteLine("Usuario: " + prestamo.IdentificadorUsuario);
+            Console.WriteLine("Fecha: " + prestamo.Fecha);
+            Console.WriteLine("----------------------");
+        }
+    }
 }
