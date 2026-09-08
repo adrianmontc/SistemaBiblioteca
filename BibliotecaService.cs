@@ -220,4 +220,95 @@ public class BibliotecaService : IRepositorio<Libro>
 
         Console.WriteLine("Devolucion registrada correctamente.");
     }
+    public void ConsultarLibrosDisponibles()
+    {
+        Console.WriteLine("LIBROS DISPONIBLES");
+
+        var disponibles = libros
+            .Where(l => l.Disponible)
+            .ToList();
+
+        if (disponibles.Count == 0)
+        {
+            Console.WriteLine("No existen libros disponibles.");
+            return;
+        }
+
+        foreach (Libro libro in disponibles)
+        {
+            libro.Mostrar();
+            Console.WriteLine("----------------------");
+        }
+    }
+    public void ConsultarPorAutorOCategoria()
+    {
+        Console.Write("Ingrese autor o categoria: ");
+        string texto = Console.ReadLine() ?? "";
+
+        var resultados = libros
+            .Where(l =>
+                l.Autor.ToLower() == texto.ToLower() ||
+                l.Categoria.ToLower() == texto.ToLower())
+            .ToList();
+
+        if (resultados.Count == 0)
+        {
+            Console.WriteLine("No se encontraron libros.");
+            return;
+        }
+
+        foreach (Libro libro in resultados)
+        {
+            libro.Mostrar();
+            Console.WriteLine("----------------------");
+        }
+    }
+    public void ConsultarLibrosOrdenados()
+    {
+        Console.WriteLine("LIBROS ORDENADOS POR TITULO");
+
+        var resultados = libros
+            .OrderBy(l => l.Titulo)
+            .ToList();
+
+        if (resultados.Count == 0)
+        {
+            Console.WriteLine("No existen libros registrados.");
+            return;
+        }
+
+        foreach (Libro libro in resultados)
+        {
+            libro.Mostrar();
+            Console.WriteLine("----------------------");
+        }
+    }
+    public void ConsultarPrestamosActivos()
+    {
+        Console.WriteLine("PRESTAMOS ACTIVOS");
+
+        var resultados = prestamos
+            .Where(p => p.Activo)
+            .Select(p => new
+            {
+                CodigoLibro = p.CodigoLibro,
+                IdentificadorUsuario = p.IdentificadorUsuario,
+                Fecha = p.FechaPrestamo
+            })
+            .ToList();
+
+        if (resultados.Count == 0)
+        {
+            Console.WriteLine("No existen prestamos activos.");
+            return;
+        }
+
+        foreach (var prestamo in resultados)
+        {
+            Console.WriteLine("Codigo del libro: " + prestamo.CodigoLibro);
+            Console.WriteLine("Usuario: " + prestamo.IdentificadorUsuario);
+            Console.WriteLine("Fecha: " + prestamo.Fecha);
+            Console.WriteLine("----------------------");
+        }
+    }
 }
